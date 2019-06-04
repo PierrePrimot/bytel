@@ -29,7 +29,7 @@ components:
       description: "Lien HATEOAS Bytel"
       type: object
       required:
-        - type
+        - href
       properties:
         #mime type (ex : application/json)
         type:
@@ -41,7 +41,7 @@ components:
       description: "Action HATEOAS Bytel"
       type: object
       required:
-        - type
+        - action
         - method
       properties:
         #mime type (ex : application/json)
