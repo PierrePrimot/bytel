@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: Structure de référence des liens et actions
+  version: 1.0.0
+  description: "Définit les structures normées des liens et actions"
+#Sommet de la mochitude : déclarer un paths obligatoire juste pour pouvoir importer les components dans d'autres fichiers, cf https://github.com/OAI/OpenAPI-Specification/issues/1045
+paths:
+  /noop:
+    post:
+      operationId: noop
+      responses:
+        "204":
+          description: "Operation Successful"
+        "404":
+          #Juste pour que l'éditeur swagger ne lève pas de warning sur les schémas inutilisés
+          description: "Fake error"
+          content:
+            application/link:
+              schema:
+                $ref: "#/components/schemas/XLink"
+            application/action:
+              schema:
+                $ref: "#/components/schemas/XAction"
+                
+components:
+  schemas:
+    #Pourquoi pas Link ? Parce que ça peut être un nom déjà utilisé ailleurs
+    XLink:
+      description: "Lien HATEOAS Bytel"
+      type: object
+      required:
+        - type
+      properties:
+        #mime type (ex : application/json)
+        type:
+          type: string
+        #Url à parcourir
+        href:
+          type: string
+    XAction:
+      description: "Action HATEOAS Bytel"
+      type: object
+      required:
+        - type
+        - method
+      properties:
+        #mime type (ex : application/json)
+        type:
+          type: string
+        #Url à parcourir
+        action:
+          type: string
+        method:
+          type: string
+          enum: [PUT, POST, PATCH]
+        input:
+          type: object
