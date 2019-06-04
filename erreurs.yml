@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  title: Structure de référence des erreurs
+  version: 1.0.0
+  description: "Défini la structure commune à toutes les erreurs fonctionnelles"
+#Sommet de la mochitude : déclarer un path obligatoire juste pour pouvoir importer les components dans d'autres fichiers, cf https://github.com/OAI/OpenAPI-Specification/issues/1045
+paths:
+  /noop:
+    post:
+      operationId: noop
+      responses:
+        "204":
+          description: "Operation Successful"
+        "404":
+          #Juste pour que l'éditeur swagger ne lève pas de warning sur la BusinessError inutilisée
+          description: "Fake error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BusinessError"
+components:
+  schemas:
+    BusinessError:
+      description: ""
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+        error_parameters:
+          type: array
+          items: 
+            type: string
